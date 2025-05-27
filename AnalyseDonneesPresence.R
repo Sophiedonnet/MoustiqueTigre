@@ -6,32 +6,131 @@ library(dplyr)
 library(readr)
 library(ggplot2)
 library(stringr)
-
+library(tidyr)
+library(stringr)
+library(lubridate)
 # Read the CSV file
 Presence <- read.csv("~/WORK_ALL/MEDIATION/LesMouettesSavantes/MoustiqueTigre/DataMoustiqueTigre/DonnesPresenceDepartementMoustique.csv")
 Presence  <- Presence  %>% select(-c("X.1","X"))
 Presence <- Presence %>%
-  rename_with(~ str_replace(., "^X", ""), starts_with("X"))
+  rename_with(~ str_replace(., "^X", ""), starts_with("X")) %>%rename(code_departement=Departement)
 
 
-# Get name of departement from the other dataset 
-Donnees_arboviroses <- read.csv("~/WORK_ALL/MEDIATION/LesMouettesSavantes/MoustiqueTigre/DataMoustiqueTigre/Donnees_arboviroses.csv")
-
-Donnees_arboviroses <- Donnees_arboviroses %>%
-  mutate(Département.Code = case_when(
-    Département.Code == "2A" ~ "201",
-    Département.Code == "2B" ~ "202",
-    TRUE ~ Département.Code
-  ))%>% mutate(Département.Code.numeric = as.numeric(Département.Code))
-
-
-listeDepartement <- Donnees_arboviroses %>%   group_by(Département.Code.numeric,Département) %>%arrange(Département.Code.numeric) %>%
-  summarise(mean_population = mean(population, na.rm = TRUE))
-
-#Check 
-# cbind(listeDepartement$Département.Code.numeric,Presence[,1])
+Presence_long <- Presence %>%
+  pivot_longer(
+    cols = `2004`:`2024`,       # columns for the years
+    names_to = "year",          # new column name for years
+    values_to = "infected"      # new column name for 0/1 presence
+  ) %>%
+  mutate(year = as.integer(year))   # convert year to integer if needed
+source(file='departementListe.R')
+Presence_long <- Presence_long %>%left_join(departement_lookup, by = "code_departement")
+Presence_long <- Presence_long %>%   select(name_departement, everything())
+Presence_long$code_departement  <- str_pad(Presence_long$code_departement, width = 2, pad = "0")
 
 
-cbind(listeDepartement,Presence[,-1])
+###########################################################
+# Get population of departement from the other dataset 
+########################################################### 
+arboviroses <- read.csv("~/WORK_ALL/MEDIATION/LesMouettesSavantes/MoustiqueTigre/DataMoustiqueTigre/Donnees_arboviroses.csv")
+arboviroses <- arboviroses %>%
+  mutate(Mois = as.Date(paste0(Mois, "-01")))
+pop_departement <- arboviroses %>%
+  mutate(year = year(Mois)) %>%              # Extract the year
+  group_by(year, Département.Code) %>%            # Group by year and department
+  summarise(mean_pop = mean(population, na.rm = TRUE)) %>%  # Sum the values
+  ungroup()
+
+
+estim_pop_dep_2004_2011 <- read_excel("DataMoustiqueTigre/estim-pop-dep-2004-2011.xls")
+estim_pop_dep_2004_2011 <- estim_pop_dep_2004_2011 %>% select(-c("2023","2022","2021")) %>%
+  pivot_longer(
+    cols = `2004`:`2011`,       # columns for the years
+    names_to = "year",          # new column name for years
+    values_to = "population"      # new column name for 0/1 presence
+  ) %>%
+  mutate(year = as.integer(year))  
+
+Presence_long$population <- rep(NA,nrow(Presence_long))
+
+for (i in 1:nrow(Presence_long)){
+  
+  dep_i <- Presence_long$code_departement[i]
+  year_i <- Presence_long$year[i]
+  
+  if(year_i>=2012){
+    u <- which(pop_departement$Département.Code==dep_i & pop_departement$year==year_i )
+    Presence_long$population[i]=pop_departement$mean_pop[u]
+  }else{
+    u <- which(estim_pop_dep_2004_2011$Code==dep_i & estim_pop_dep_2004_2011$year==year_i )
+    Presence_long$population[i]=estim_pop_dep_2004_2011$population[u]
+  }
+}
+data_Presence <- Presence_long
+
+##########################################################" 
+# Plots  Nb of departement infected 
+
+departements_infected_per_year <- data_Presence %>%
+  group_by(year) %>%
+  summarise(n_infected = sum(infected, na.rm = TRUE))  # sum of 1s = number infected
+ggplot(departements_infected_per_year, aes(x = year, y = n_infected)) +
+  geom_line(color = "red", size = 1.2) +
+  geom_point(color = "darkred", size = 2) +
+  labs(title = "Number of Infected Departments per Year",
+       x = "Year",
+       y = "Number of Infected Departments") +
+  theme_minimal()
+
+##########################################################" 
+# Plots  Max  latitude  of  infected departement  
+latitute_departements_infected_per_year <- data_Presence %>%
+  group_by(year) %>%
+  summarise(lat_infected = max(infected*Latitude.la.plus.au.nord, na.rm = TRUE))  # sum of 1s = number infected
+
+ggplot(latitute_departements_infected_per_year, aes(x = year, y = lat_infected)) +
+  geom_line(color = "red", size = 1.2) +
+  geom_point(color = "darkred", size = 2) +
+  labs(title = "Lat",
+       x = "Year",
+       y = "Number of Infected Departments") +
+  theme_minimal()
+
+
+##########################################################" 
+# Plots population infected per year   
+population_infected_per_year <- data_Presence %>%
+  group_by(year) %>%
+  summarise(pop_infected = sum(infected*population, na.rm = TRUE)/sum(population, na.rm = TRUE))  # sum of 1s = number infected
+
+# Step 2: Plot
+ggplot(population_infected_per_year, aes(x = year, y = pop_infected)) +
+  geom_line(color = "red", size = 1.2) +
+  geom_point(color = "darkred", size = 2) +
+  labs(title = "Exposed Population per Year",
+       x = "Year",
+       y = "Exposed Population") +
+  theme_minimal()
+
+
+
+
+
+
+# Plots 
+
+population_infected_per_year <- data_Presence %>%
+  group_by(year) %>%
+  summarise(n_dept_infected = sum(infected, na.rm = TRUE)) %>%summarise(pop_infected = sum(infected*population, na.rm = TRUE))  # sum of 1s = number infected
+
+# Step 2: Plot
+ggplot(population_infected_per_year, aes(x = year, y = n_infected)) +
+  geom_line(color = "red", size = 1.2) +
+  geom_point(color = "darkred", size = 2) +
+  labs(title = "Number of Infected Departments per Year",
+       x = "Year",
+       y = "Number of Infected Departments") +
+  theme_minimal()
+
 
 
