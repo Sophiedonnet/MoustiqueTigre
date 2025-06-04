@@ -1,85 +1,32 @@
-rm(list=ls())
+arbovirose_data_year <- read.csv("~/WORK_LOCAL/MEDIATION/MouettesSavantes/MoustiqueTigre/DataMoustiqueTigre/arbovirose_data_year.csv")
 
-
-# Load necessary libraries
+############# plot in R 
+library(tidyr)
 library(dplyr)
-library(readr)
 library(ggplot2)
-library(lubridate)
-# Read the CSV file
-arboviroses <- read.csv("~/WORK_ALL/MEDIATION/LesMouettesSavantes/MoustiqueTigre/DataMoustiqueTigre/Donnees_arboviroses.csv")
-arboviroses <- arboviroses %>%
-  mutate(Mois = as.Date(paste0(Mois, "-01")))
+arbovirose_data_year_long <- arbovirose_data_year %>%
+  pivot_longer(
+    cols = -year,
+    names_to = c("disease", "drop", "type"),
+    names_sep = "_",
+    values_to = "cases"
+  ) %>%
+  select(-drop) 
 
-
-
-
-# View the unique disease names if needed
-unique(arboviroses$Arbovirose)  # Replace 'disease' with actual column name indicating the disease
-
-# Filter data for each disease
-
-disease_data <- dengue_data <- filter(arboviroses, Arbovirose == "Dengue")
-save(disease_data,file='DataMoustiqueTigre/dengue_data.Rdata')
-write.csv(disease_data,file='DataMoustiqueTigre/dengue_data.csv')
-
-
-disease_data <- zika_data <- filter(arboviroses,Arbovirose == "Zika")
-save(disease_data,file='DataMoustiqueTigre/zika_data.Rdata')
-write.csv(disease_data,file='DataMoustiqueTigre/zika_data.csv')
-
-
-disease_data <- chikungunya_data <- filter(arboviroses,Arbovirose == "Chikungunya")
-save(disease_data,file='DataMoustiqueTigre/chikungunya_data.Rdata')
-write.csv(disease_data,file='DataMoustiqueTigre/chikungunya_data.csv')
-
-#--------------------------------------------------------- 
-disease <- "dengue"
-#disease <- "zika"
-#disease <- "chikungunya"
-
-name_data <- paste0('DataMoustiqueTigre/',disease,'_data.Rdata') 
-load(file=name_data)
-
-data_year <- disease_data %>%
-  mutate(year = year(Mois)) %>%              # Extract the year
-  group_by(year, Département) %>%            # Group by year and department
-  summarise(total_Nombre.de.cas.autochtones = sum(Nombre.de.cas.autochtones, na.rm = TRUE)) %>%  # Sum the values
-  ungroup()
-head(data_year)
-
-title_data = paste0("Nombre total de cas de ",disease, ' par an et par département ')
-
-ggplot(data_year, aes(x = year, y = total_Nombre.de.cas.autochtones, color = Département)) +
-  geom_line(size = 1) +
-  geom_point() +
+ggplot(arbovirose_data_year_long, aes(x = factor(year), y = cases, fill = type)) +
+  geom_bar(stat = "identity") +  # default is position = "stack"
+  facet_wrap(~ disease) +
   labs(
-    title = title_data,
-    x = "Year",
-    y = "Total Cases",
-    color = "Department"
-  ) + theme_minimal() +  theme(legend.position = "none")
+    title = "Nombre de cas autochtones et importés par maladie et par an",
+    x = "Année",
+    y = "Nombre de cas",
+    fill = "Type de cas"
+  ) +
+  theme_minimal() + theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)
+  )
 
-
-
-
-data_france_year <- disease_data %>%
-  mutate(year = year(Mois)) %>%              # Extract the year
-  group_by(year) %>%            # Group by year and department
-  summarise(total_Nombre.de.cas.autochtones = sum(Nombre.de.cas.autochtones, na.rm = TRUE)) %>%  # Sum the values
-  ungroup()
-
-title_data = paste0("Nombre total de cas de ",disease, ' par an en métropole ')
-
-
-ggplot(data_france_year, aes(x = year, y = total_Nombre.de.cas.autochtones)) +
-  geom_line(size = 1) +
-  geom_point() +
-  labs(
-    title = title_data,
-    x = "Year",
-    y = "Total Cases"
-  ) + theme_minimal() +  theme(legend.position = "none")
+ 
 
 
 

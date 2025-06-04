@@ -1,4 +1,4 @@
-mytable<- read.delim("~/WORK_ALL/MEDIATION/LesMouettesSavantes/MoustiqueTigre/DataMoustiqueTigre/DonneesPresenceTemporelle.csv")
+mytable<- read.delim("DataMoustiqueTigre/DonneesPresenceTemporelle.csv")
 head(mytable)
 
 

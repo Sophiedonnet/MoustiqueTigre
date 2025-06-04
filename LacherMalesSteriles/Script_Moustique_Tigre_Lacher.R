@@ -49,7 +49,7 @@ plot(0:N_weeks,evolution_N_Eggs,type='l')
 N_EggsViable = Capacity_eggs
 N_EggsSterile <- 0 
 evolution_N_EggsViable <- c(N_EggsViable)
-N_Male_sterile_lacher  = 50000
+N_Male_sterile_lacher  = 5000
 ###############################" Evolution du nombre  
 
 for (week in 1:N_weeks){
