@@ -1,6 +1,4 @@
 rm(list=ls())
-
-
 # Load necessary libraries
 library(dplyr)
 library(readr)
@@ -82,7 +80,7 @@ write.csv(data_Presence,file='DataMoustiqueTigre/presenceMoustiqueTigre_data_yea
 data_infected_per_year <- data_Presence %>%
   group_by(year) %>%
   summarise(nb_dept_infected = sum(infected, na.rm = TRUE), 
-            lat_max_infected = max(infected*Latitude.la.plus.au.nord, na.rm = TRUE),
+            lat_mean_infected = mean(infected*Latitude.la.plus.au.nord, na.rm = TRUE),
             pop_infected = sum(infected*population, na.rm = TRUE)
   ) 
 write.csv(data_infected_per_year,file='DataMoustiqueTigre/infectionMoustiqueTigre_data_year.csv',row.names = FALSE)
@@ -94,46 +92,50 @@ write.csv(data_infected_per_year,file='DataMoustiqueTigre/infectionMoustiqueTigr
 # ##########################################################" 
 # # Plots  Nb of departement infected 
 # 
-# departements_infected_per_year <- data_Presence %>%
-#   group_by(year) %>%
-#   summarise(n_infected = sum(infected, na.rm = TRUE))  # sum of 1s = number infected
-# ggplot(departements_infected_per_year, aes(x = year, y = n_infected)) +
-#   geom_line(color = "red", size = 1.2) +
-#   geom_point(color = "darkred", size = 2) +
-#   labs(title = "Number of Infected Departments per Year",
-#        x = "Year",
-#        y = "Number of Infected Departments") +
-#   theme_minimal()
+ departements_infected_per_year <- data_Presence %>%
+   group_by(year) %>%
+   summarise(n_infected = sum(infected, na.rm = TRUE))  # sum of 1s = number infected
+ ggplot(departements_infected_per_year, aes(x = year, y = n_infected)) +
+   geom_line(color = "red", size = 1.2) +
+   geom_point(color = "darkred", size = 2) +
+   labs(title = "Number of Infected Departments per Year",
+        x = "Year",
+        y = "Number of Infected Departments") +
+   theme_minimal()
 # 
 # ##########################################################" 
 # # Plots  Max  latitude  of  infected departement  
-# latitute_departements_infected_per_year <- data_Presence %>%
-#   group_by(year) %>%
-#   summarise(lat_infected = max(infected*Latitude.la.plus.au.nord, na.rm = TRUE))  # sum of 1s = number infected
-# 
-# ggplot(latitute_departements_infected_per_year, aes(x = year, y = lat_infected)) +
-#   geom_line(color = "red", size = 1.2) +
-#   geom_point(color = "darkred", size = 2) +
-#   labs(title = "Lat",
-#        x = "Year",
-#        y = "Number of Infected Departments") +
-#   theme_minimal()
-# 
+ latitute_departements_infected_per_year <- data_Presence %>%
+   group_by(year) %>%
+   summarise(lat_infected = mean(infected*Latitude.la.plus.au.nord, na.rm = TRUE))  # sum of 1s = number infected
+ 
+ ggplot(latitute_departements_infected_per_year, aes(x = year, y = lat_infected)) +
+   geom_line(color = "red", size = 1.2) +
+   geom_point(color = "darkred", size = 2) +
+   labs(title = "Lat",
+        x = "Year",
+        y = "Latitude moyenne des départements infectés") +
+   theme_minimal()
+
+
+#------------------------------------------------------------ 
+ 
+
 # 
 # ##########################################################" 
 # # Plots population infected per year   
-# population_infected_per_year <- data_Presence %>%
-#   group_by(year) %>%
-#   summarise(pop_infected = sum(infected*population, na.rm = TRUE)/sum(population, na.rm = TRUE))  # sum of 1s = number infected
+ population_infected_per_year <- data_Presence %>%
+   group_by(year) %>%
+   summarise(pop_infected = sum(infected*population, na.rm = TRUE)/sum(population, na.rm = TRUE))  # sum of 1s = number infected
 # 
 # # Step 2: Plot
-# ggplot(population_infected_per_year, aes(x = year, y = pop_infected)) +
-#   geom_line(color = "red", size = 1.2) +
-#   geom_point(color = "darkred", size = 2) +
-#   labs(title = "Exposed Population per Year",
-#        x = "Year",
-#        y = "Exposed Population") +
-#   theme_minimal()
+ ggplot(population_infected_per_year, aes(x = year, y = pop_infected)) +
+   geom_line(color = "red", size = 1.2) +
+   geom_point(color = "darkred", size = 2) +
+   labs(title = "Exposed Population per Year",
+        x = "Year",
+        y = "Exposed Population") +
+   theme_minimal()
 # 
 # 
 # 
