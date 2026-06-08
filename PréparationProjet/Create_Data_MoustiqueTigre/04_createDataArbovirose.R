@@ -4,7 +4,7 @@ library(readr)
 
 library(lubridate)
 # Read the CSV file
-arboviroses <- read.csv("DataMoustiqueTigre/Donnees_arboviroses.csv")
+arboviroses <- read.csv("Raw_data_arboviroses/Donnees_arboviroses.csv")
 arboviroses <- arboviroses %>%
   mutate(Mois = as.Date(paste0(Mois, "-01")))
 
@@ -44,4 +44,4 @@ dengue_data_year <- dengue_data %>%
 # Merge the dataframes by 'year'
 arbovirose_data_year <- dengue_data_year %>%   full_join(zika_data_year, by = "year") %>%
   full_join(chikungunya_data_year, by = "year")
-write.csv(arbovirose_data_year,file='DataMoustiqueTigre/arbovirose_data_year.csv',row.names = FALSE)
+write.csv(arbovirose_data_year,file='preparedData_cas_arbovirose_year.csv',row.names = FALSE)
