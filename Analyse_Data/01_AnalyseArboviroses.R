@@ -1,9 +1,16 @@
-arbovirose_data_year <- read.csv("~/WORK_LOCAL/MEDIATION/MouettesSavantes/MoustiqueTigre/DataMoustiqueTigre/arbovirose_data_year.csv")
+setwd("~/WORK_ALL/MEDIATION/LesMouettesSavantes/MoustiqueTigre")
 
-############# plot in R 
+
 library(tidyr)
 library(dplyr)
 library(ggplot2)
+
+
+
+#----------------- LES DONNEES 
+arbovirose_data_year <- read.csv("PreparedData/preparedData_cas_arbovirose_year.csv")
+
+#-------------- Plot en R  
 arbovirose_data_year_long <- arbovirose_data_year %>%
   pivot_longer(
     cols = -year,
