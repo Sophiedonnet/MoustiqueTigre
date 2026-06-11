@@ -11,9 +11,9 @@
 
 
 
-<title>Invasion du moustique tigre</title>
+<title>Latent variable models for ecology and biology</title>
 
-<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -30,8 +30,8 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -48,6 +48,7 @@
 
 
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 
 
 
@@ -233,7 +234,7 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="https://marieetienne.github.io/lesmouettessavantes/descriptionProjet.html">Mouettes Savantes</a>
+  <a href="index.html">Organisation</a>
 </li>
 <li>
   <a href="ressources.html">Ressources</a>
@@ -295,66 +296,125 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Invasion du moustique tigre</h1>
+<h1 class="title toc-ignore">Latent variable models for ecology and
+biology</h1>
 
 </div>
 
 
-<p><br>
-<img src="img/moustiquetigre.png" alt="MoustiqueTigre" width = "200px" align="right">
+<p><br></p>
+<p><img src="img/HMM.png" alt="mpe" width = "280px" align="right">
 </img></p>
-<p>Vous trouverez ici les ressources nécéssaires pour mener à bien le
-projet “Moustique Tigre” lors de la semaine des <a
-href="https://marieetienne.github.io/lesmouettessavantes/">Mouettes
-Savantes 2026</a>.</p>
-<div id="contexte" class="section level3">
-<h3>0. Contexte</h3>
-<p>Vous avez toutes entendu parler du moustique tigre. A l’aide d’outils
-numériques et mathématique, nous allons nous pencher sur cette invasion,
-ses conséquences et les solutions envisageable.</p>
-</div>
-<div id="le-moustique-est-il-dangereux" class="section level3">
-<h3>1. Le moustique est-il dangereux?</h3>
-<p>A l’aide de recherches sur internet et d’analyse de données, on se
-demandera pourquoi on craint tant le moustique tigre.</p>
-<p><strong>Données à disposition</strong>:</p>
-<ul>
-<li><a href="PreparedData/preparedData_cas_arbovirose_year.csv">Cas de
-dengue, zika et chikungunya</a> (données issues de santé public
-france).<br />
-</li>
-<li><a
-href="PreparedData/preparedData_presenceMoustiqueTigre_departement_year.csv">Présence
-du moustique sur le territoire métropolitain par département</a><br />
-</li>
-<li><a
-href="PreparedData/preparedData_progressionMoustiqueTigre_year.csv">Progression
-du moustique sur le territoire métropolitain au cours du temps</a></li>
-</ul>
-</div>
-<div id="peut-on-éradiquer-le-moustique" class="section level3">
-<h3>2. Peut-on éradiquer le moustique?</h3>
-<p>Dans cet <a
-href="https://www.inserm.fr/actualite/des-moustiques-genetiquement-modifies-pour-lutter-contre-la-propagation-des-maladies/">article</a>,
-l’inserm propose des solutions pour contenir l’invasion. Nous allons
-utiliser un modèle mathématique et du code python pour comprendre
-comment évolue une population de moustiques tigre.</p>
-<ul>
-<li>Ecrire un programme Python permettant de “modéliser” une population
-de moustique tigre. On se basera sur le cycle de vie du moustique tigre
-simplifié:</li>
-</ul>
-<p><img src="img/CycleVieMoustiqueTigre.jpg" alt="CycleVieMoustiqueTigre" width = "500px" align="center">
-</img></p>
-<ul>
-<li>Modifier ce cycle de vie en fonction des 2 techniques proposées par
-l’INSERM</li>
-<li>Ecrire les programmes permettant de comparer l’évolution dans ces
-situations</li>
-<li>Peut-on évaluer les couts financiers de chaque technique pour une
-même efficacité?</li>
-</ul>
-<p><em>Last update on 11/06/26 </em></p>
+<p>The course is based on a book that we are writing currently with <a
+href="https://scj-robin.github.io/">Stéphane Robin</a> and <a
+href="https://papayoun.github.io/">Pierre Gloaguen</a>. Before the book
+is ready, you will find some useful slides below. Note that I won’t
+always stick to these documents and may change some stuff.</p>
+<p><br></p>
+<p><br></p>
+<div id="ressources" class="section level3">
+<h3>Ressources</h3>
+<p><em>Last update on 16/12/25 </em></p>
+<table>
+<colgroup>
+<col width="35%" />
+<col width="22%" />
+<col width="22%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Chapitre</th>
+<th align="center">Slides</th>
+<th align="left">Illustration</th>
+<th align="center">Ressources</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Presentation</strong></td>
+<td align="center"><a
+href="./Ressources/Slides/Chap1_PresCours/LVM_pres_2025.pdf"><i class="fa fa-download"></i></a></td>
+<td align="left"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Chap 2</strong> : Explicit E step</td>
+<td align="center"><a
+href="./Ressources/Slides/Chap2_LVM_GeneralDef/chap2_LVM_Mixtures.pdf"><i class="fa fa-download"></i></a></td>
+<td align="left"><a
+href="./Ressources/IllustrationsRmd/Chap1_MixtureAdelie/Chap1_PalmerPinguins.html">Adelie
+Penguins</a></td>
+<td align="center"><a
+href="./Ressources/IllustrationsRmd/Chap1_MixtureAdelie.zip">Files</a></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"><a
+href="./Ressources/IllustrationsRmd/Chap2_1_GaussianMixtureModel/Chap2_1_BohemiaVegetation.html">Bohemia
+Vegetation</a></td>
+<td align="center"><a
+href="./Ressources/IllustrationsRmd/Chap2_1_GaussianMixtureModel.zip">Files</a></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"><a
+href="./Ressources/IllustrationsRmd/Chap2_2_ZeroInflatedPoisson/Chap2_2_BarentFishesZIP.html">Barents
+fishes</a></td>
+<td align="center"><a
+href="./Ressources/IllustrationsRmd/Chap2_2_ZeroInflatedPoisson.zip">Files</a></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"><a
+href="./Ressources/Slides/TP-EM-Poisson/TP_Poisson.pdf">Exercice on
+Poisson Mixture</a></td>
+<td align="center"><a href="">Correction</a></td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Chap 3</strong> : Non explicit E step
+(HMM)</td>
+<td align="center"><a
+href="./Ressources/Slides/Chap3_LVM_NonExplicitE/chap3_LVM_HMM.pdf"><i class="fa fa-download"></i></a></td>
+<td align="left">To come</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Chap 4</strong> : Approximated E step
+(Variational EM)</td>
+<td align="center"><a
+href="https://sophiedonnet.github.io/IntroductionToBlockModels/">Complete
+course</a> <a
+href="./Ressources/Slides/Chap4_LVM_VariationalE/Slides_SBM_LBM/slides_SBM_LBM_intro/chap4_LVM_SBM_LBM.pdf"><i class="fa fa-download"></i></a></td>
+<td align="left"><a
+href="https://sophiedonnet.github.io/IntroductionToBlockModels/TP_SBM/TutorialBM.html">Parasitism
+Ecological network</a></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Chap5</strong> : A gentle introduction to
+Variational probabilistic Autoencoder</td>
+<td align="center"><a
+href="./Ressources/Slides/Chap5_VarAutoEncoder/SlidesVAE/chap5_LVM_VAE.pdf"><i class="fa fa-download"></i></a></td>
+<td align="left"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Chap 6</strong> : Bayesien inference of Latent
+variable models</td>
+<td align="center"><a
+href="./Ressources/Slides/Chap6_LBM_Bayesian/chap6_LVM_bayesian_main.pdf"><i class="fa fa-download"></i></a></td>
+<td align="left"><a
+href="https://Sophiedonnet.github.io/BayesianClassMaterial/PoissonMixtureVBversusMCMC.html">MCMC
+versus VEM on Poisson mixture</a></td>
+<td align="center"><a
+href="https://sophiedonnet.github.io/BayesianClassMaterial/PoissonMixtureVB.zip">Files</a></td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
