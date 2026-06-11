@@ -4,22 +4,25 @@ subtitle:
 output: 
   html_document:
    toc: false
-   logo: img/LogoINRAE-MIA.jpg
+   logo: img/moeutte.jpeg
    number_sections: false
    highlight: tango
    includes:
      before_body: extlogo.html
 ---
 
-<br>
-<img src="img/moustiquetigre.png" alt="MoustiqueTigre" width = "200px" align="right"> </img>
 
+<br>
+<img src="img/moustiquetigre.png" alt="Mouettes Savantes" width = "130px" align="center"> </img>
+
+
+
+ 
+Vous avez toutes entendu parler du moustique tigre. A l'aide d'outils numériques et mathématique, nous allons nous pencher sur cette invasion, ses conséquences et  les solutions envisageable. 
 Vous trouverez ici les ressources nécéssaires pour mener à bien le projet "Moustique Tigre" lors de la semaine des [Mouettes Savantes 2026](https://marieetienne.github.io/lesmouettessavantes/).  
 
 
-### 0.  Contexte 
-Vous avez toutes entendu parler du moustique tigre. A l'aide d'outils numériques et mathématique, nous allons nous pencher sur cette invasion, ses conséquences et  les solutions envisageable. 
-
+<br>
 
 
 ### 1. Le moustique est-il dangereux? 
@@ -33,10 +36,13 @@ A l'aide de recherches sur internet et d'analyse de données, on se demandera po
   - [Progression du moustique sur le territoire métropolitain au cours du temps](PreparedData/preparedData_progressionMoustiqueTigre_year.csv)
   
 
+<br>
+
+
 ### 2. Peut-on éradiquer le moustique? 
 
 
-Dans cet [ article](https://www.inserm.fr/actualite/des-moustiques-genetiquement-modifies-pour-lutter-contre-la-propagation-des-maladies/), l'inserm propose des solutions pour contenir l'invasion. Nous allons utiliser un modèle mathématique et du code python pour comprendre comment évolue une population de moustiques tigre.   
+Dans cet [article](https://www.inserm.fr/actualite/des-moustiques-genetiquement-modifies-pour-lutter-contre-la-propagation-des-maladies/), l'inserm propose des solutions pour contenir l'invasion. Nous allons utiliser un modèle mathématique et du code python pour comprendre comment évolue une population de moustiques tigre.   
 
 
  - Ecrire un programme Python permettant de "modéliser" une population de moustique tigre. On se basera sur le cycle de vie du moustique tigre simplifié:
